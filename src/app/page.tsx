@@ -1,11 +1,11 @@
 "use server";
 
+import { getTodos } from "@/actions/actions";
 import { TodoCard } from "@/components/TodoCard";
 import { TodoForm } from "@/components/TodoForm";
-import { todoClient } from "@/services/todoService";
 
 export default async function Home() {
-  const data = await todoClient.getTodos();
+  const data = await getTodos();
 
   return (
     <div className="p-4">

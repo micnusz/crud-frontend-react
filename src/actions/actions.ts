@@ -1,7 +1,7 @@
 "use server";
 
 import apiClient from "@/lib/apiClient";
-import { TodoDTO } from "@/types/types";
+import { Todo, TodoDTO } from "@/types/types";
 
 export async function createTodo(prevState: any, formData: FormData) {
   try {
@@ -39,5 +39,18 @@ export async function createTodo(prevState: any, formData: FormData) {
       message: "Failed to create todo",
       success: false,
     };
+  }
+}
+
+export async function getTodos(): Promise<Todo[]> {
+  try {
+    const res = await apiClient.get<{ content: Todo[] }>(
+      "/todos?page=0&size=10&sortBy=createdAt&direction=desc"
+    );
+
+    return res.data.content;
+  } catch (error) {
+    console.error("Error creating todo:", error);
+    return [];
   }
 }
